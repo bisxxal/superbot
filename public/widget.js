@@ -1,53 +1,52 @@
-
 (function () {
-  const siteId = document.currentScript.getAttribute("data-site-id");
-  // Create the chat button
-  const button = document.createElement("div");
-  button.innerHTML = "💬";
-  button.style = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #2563eb;
-    color: white;
-    border-radius: 50%;
-    font-size: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 9999;
-  `;
-  document.body.appendChild(button);
+  window.addEventListener("load", () => {
+    const currentScript = document.currentScript;
+    const siteId = currentScript?.getAttribute("data-site-id") || "default";
 
-  // Create iframe but hidden initially
-  const iframe = document.createElement("iframe");
-  iframe.src = `https://super-bot-x.vercel.app/chatbot?siteId=${siteId}`;
-  iframe.style = `
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 400px;
-    height: 500px;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    display: none;
-    z-index: 9999;
-  `;
-  document.body.appendChild(iframe);
+    // Create chat button
+    const button = document.createElement("div");
+    button.innerHTML = "💬";
+    Object.assign(button.style, {
+      position: "fixed",
+      bottom: "20px",
+      right: "20px",
+      width: "60px",
+      height: "60px",
+      backgroundColor: "#2563eb",
+      color: "white",
+      borderRadius: "50%",
+      fontSize: "28px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      zIndex: "9999",
+    });
+    document.body.appendChild(button);
 
-  // Toggle open/close
-  button.addEventListener("click", () => {
-    iframe.style.display = iframe.style.display === "none" ? "block" : "none";
+    // Create iframe (hidden initially)
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://super-bot-x.vercel.app/chatbot?siteId=${siteId}`;
+    Object.assign(iframe.style, {
+      position: "fixed",
+      bottom: "90px",
+      right: "20px",
+      width: "400px",
+      height: "500px",
+      border: "none",
+      borderRadius: "12px",
+      boxShadow: "0 0 20px rgba(0,0,0,0.2)",
+      display: "none",
+      zIndex: "9999",
+    });
+    document.body.appendChild(iframe);
+
+    // Toggle open/close
+    button.addEventListener("click", () => {
+      iframe.style.display =
+        iframe.style.display === "none" ? "block" : "none";
+    });
   });
 })();
 
-
-<script
-  src="https://super-bot-x.vercel.app/widget.js"
-  data-site-id="my-awesome-react-site"
-  defer
-></script>
+ 

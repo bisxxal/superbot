@@ -28,6 +28,24 @@ export default function RootLayout({
 
           <BotennicaChatbot />
         </QuaryClient>
+
+        <script
+            src="https://super-bot-x.vercel.app/widget.js"
+            data-site-id="fdcsewrfdweefrd"
+            defer
+          ></script>
+
+          {/* <script src="http://127.0.0.1:3000/widget.js" defer></script> */}
+<script src="http://localhost:3000/widget.js" defer></script>
+
+
+{/* <script
+  src="https://super-bot-x.vercel.app/widget.js"
+  data-site-id="my-awesome-react-site"
+  defer
+></script> */}
+
+
       </body>
     </html>
   );
