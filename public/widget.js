@@ -1,8 +1,6 @@
-// public/widget.js
 
 (function () {
   const siteId = document.currentScript.getAttribute("data-site-id");
-
   // Create the chat button
   const button = document.createElement("div");
   button.innerHTML = "💬";
@@ -26,7 +24,7 @@
 
   // Create iframe but hidden initially
   const iframe = document.createElement("iframe");
-  iframe.src = `https://bisxxal-ai-bot.vercel.app/chatbot?siteId=${siteId}`;
+  iframe.src = `https://super-bot-x.vercel.app/chatbot?siteId=${siteId}`;
   iframe.style = `
     position: fixed;
     bottom: 90px;
@@ -49,7 +47,7 @@
 
 
 <script
-  src="https://bisxxal-ai-bot.vercel.app/widget.js"
+  src="https://super-bot-x.vercel.app/widget.js"
   data-site-id="my-awesome-react-site"
   defer
 ></script>

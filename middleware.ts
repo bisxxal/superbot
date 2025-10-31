@@ -26,7 +26,7 @@ export default withAuth( async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/chat-bot/:path*",
+    // "/chat-bot/:path*",
     "/dashboard/:path*",
     "/profile/:path*",
     "/my-chatbot/:path*", 
