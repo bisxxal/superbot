@@ -87,7 +87,7 @@ export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'we
             }
         );
 
-        console.log(vectorStore, "sucee")
+        // console.log(vectorStore, "sucee")
 
     }
     if (type === 'text') {
@@ -134,6 +134,6 @@ export const LoadPdfEmbedings = async (url: string ) => {
         }
     })
 
-    console.log(docs);
+    // console.log(docs);
     return JSON.parse(JSON.stringify(res));
 }

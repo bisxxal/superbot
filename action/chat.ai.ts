@@ -53,7 +53,7 @@ export const chatAIAction = async (userQuary: string, collection: string) => {
         ]
     });
 
-    console.log("🤖 => ", response.choices[0].message.content);
+    // console.log("🤖 => ", response.choices[0].message.content);
 
     return response.choices[0].message.content;
 }

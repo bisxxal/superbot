@@ -33,7 +33,6 @@ export default function PdfUploader() {
 
                 setUploadStatus('Generating embeddings...');
                 const res = await LoadPdfEmbedings(data.url);
-                console.log(res)
 
                 if (res) setUploadStatus('Embeddings generated successfully!')
             } else {

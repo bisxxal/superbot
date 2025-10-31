@@ -30,11 +30,13 @@ export default function RootLayout({
         </QuaryClient>
 
 
-        {/* <script
-  src="https://super-bot-x.vercel.app/widget.js"
-  data-site-id="my-awesome-react-site"
-  defer
-></script> */}
+        <script
+          id="superbot-widget"
+
+          src="https://super-bot-x.vercel.app/widget.js"
+          data-site-id="Vishal B_pdf_collection1761938775522"
+
+        ></script>
 
 
       </body>

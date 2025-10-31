@@ -12,7 +12,7 @@ const MyChatBot = () => {
     }
   })
 
-  console.log(data)
+  // console.log(data)
   return (
     <div className=' w-full min-h-screen '>
 

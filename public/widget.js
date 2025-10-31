@@ -1,8 +1,10 @@
 (function () {
   window.addEventListener("load", () => {
-    const currentScript = document.currentScript;
-    const siteId = currentScript?.getAttribute("data-site-id") || "default";
-
+    // const currentScript = document.currentScript;
+    // const siteId = currentScript?.getAttribute("data-site-id") ;
+    
+    const scriptEl = document.getElementById("superbot-widget");
+    const siteId = scriptEl?.getAttribute("data-site-id")  ;
     // Create chat button
     const button = document.createElement("div");
     button.innerHTML = "💬";
@@ -40,8 +42,7 @@
       zIndex: "9999",
     });
     document.body.appendChild(iframe);
-
-    // Toggle open/close
+ 
     button.addEventListener("click", () => {
       iframe.style.display =
         iframe.style.display === "none" ? "block" : "none";
