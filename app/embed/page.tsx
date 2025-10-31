@@ -1,17 +1,37 @@
+// 'use client';
+// import { useSearchParams } from "next/navigation";
+// import ChatbotPage from "../chatbot/page";
+// import { Suspense } from 'react'
+
 // export default function EmbedPage() {
+//   const search = useSearchParams();
+//   const col = search.get("col") || "";
 //   return (
-//     <div className="w-full h-full bg-white text-black p-4">
-//       <h2 className="text-lg font-semibold mb-2">SuperBot 🤖</h2>
-//       <iframe
-//         src="/chat"
-//         style={{ width: "100%", height: "90%", border: "none" }}
-//       ></iframe>
-//     </div>
-//   );
+
+//     <Suspense fallback={<>...</>}>
+//       <ChatbotPage collections={col} />
+//     </Suspense>
+//   )
+
 // }
 
+
+'use client';
+
+import { useSearchParams } from "next/navigation";
 import ChatbotPage from "../chatbot/page";
+import { Suspense } from 'react';
+
+function EmbedContent() {
+  const search = useSearchParams();
+  const col = search.get("siteId") || "";
+  return <ChatbotPage collections={col} />;
+}
 
 export default function EmbedPage() {
-  return <ChatbotPage />;
+  return (
+    <Suspense fallback={<>...</>}>
+      <EmbedContent />
+    </Suspense>
+  );
 }

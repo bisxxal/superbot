@@ -17,22 +17,8 @@ function DashBoardPage() {
     const youtube = formData.get("youtube") as string
     const website = formData.get("website") as string
     const textData = formData.get("textData") as string
-    const pdfdata = formData.get("pdfdata") as File
-
-    // console.log("Text Data:", textData)
-    // console.log("pdf", pdfdata)
-    // console.log("Youtube Link:", youtube)
-    // console.log("Website Link:", website)
-
+    
     try {
-
-      // if (pdfdata) {
-      //   const url = URL.createObjectURL(pdfdata)
-      //   console.log(url)
-      //   // const res =  await generateEmbeddings( pdfdata , 'pdf')
-      //   // console.log("PDF Embeddings:", res)
-      //   setIsLoading("Generating Pdf Embeddings...")
-      // }
 
       if (youtube) {
         const collectionName = data?.user.name + "_youtube_collection"
@@ -118,7 +104,7 @@ You can add up to 10,000 characters of text context."
       </form>
 
 
-       
+
     </div>
   )
 }

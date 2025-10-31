@@ -33,3 +33,11 @@ body {
 .card {
   background: rgb(40, 40, 40);
 }
+@keyframes pulseShimmer {
+  from {
+    background-position: -1000px;
+  }
+  to {
+     background-position: 1000px;
+  }
+}

@@ -32,8 +32,7 @@ export default function PdfUploader() {
                 setUploadStatus(`Upload successful! URL: ${data.url}`);
 
                 setUploadStatus('Generating embeddings...');
-                const collectionName = data?.user.name + "_text_collection"
-                const res = await LoadPdfEmbedings(data.url, collectionName);
+                const res = await LoadPdfEmbedings(data.url);
                 console.log(res)
 
                 if (res) setUploadStatus('Embeddings generated successfully!')

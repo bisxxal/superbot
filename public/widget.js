@@ -26,7 +26,7 @@
 
     // Create iframe (hidden initially)
     const iframe = document.createElement("iframe");
-    iframe.src = `https://super-bot-x.vercel.app/chatbot?siteId=${siteId}`;
+    iframe.src = `https://super-bot-x.vercel.app/embed?siteId=${siteId}`;
     Object.assign(iframe.style, {
       position: "fixed",
       bottom: "90px",
