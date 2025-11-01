@@ -3,6 +3,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import OpenAI from "openai";
 import { QdrantClient } from '@qdrant/js-client-rest';
 import { QdrantVectorStore } from "@langchain/qdrant";
+import prisma from "@/lib/prisma";
 
 const qclient = new QdrantClient({
     url: 'https://044ba285-2d3a-44cd-b697-9608ce6873b9.eu-west-2-0.aws.cloud.qdrant.io:6333',
@@ -18,9 +19,9 @@ const emmbeddings = new OpenAIEmbeddings({
     model: "text-embedding-3-small",
     apiKey: process.env.OPENAI_API_KEY!,
 });
-export const chatAIAction = async (userQuary: string, collection: string) => {
+export const chatAIAction = async (userQuary: string, collection: string, id:string) => {
 
-    if  (!userQuary || !collection) {
+    if (!userQuary || !collection) {
         return "Invalid parameters"
     }
 
@@ -55,6 +56,19 @@ export const chatAIAction = async (userQuary: string, collection: string) => {
 
     // console.log("🤖 => ", response.choices[0].message.content);
 
+  if(id){
+      await prisma.models.update({
+        where: {
+            id ,
+        },
+        data: {
+            times: {
+                increment: 1,
+            }
+        }
+
+    });
+  }
     return response.choices[0].message.content;
 }
 

@@ -6,7 +6,10 @@ import { Suspense } from 'react';
 function EmbedContent() {
   const search = useSearchParams();
   const col = search.get("siteId") || "";
-  return <ChatbotPage collections={col} />;
+  const welcomeMessage = search.get("welcomeMessage") || "Hello! How can I assist you today?";
+  const id = search.get("id") || "";
+
+  return <ChatbotPage collections={col} welcomeMessage={welcomeMessage} id={id}/>;
 }
 
 export default function EmbedPage() {

@@ -1,10 +1,14 @@
 'use client';
 import { LoadPdfEmbedings } from '@/ai-utils/embeding';
+import { toastSuccess } from '@/lib/toast';
+import { useQueryClient } from '@tanstack/react-query';
+import { Upload } from 'lucide-react';
 import React, { useState } from 'react';
 
 export default function PdfUploader() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [uploadStatus, setUploadStatus] = useState<string>('');
+const client = useQueryClient();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -34,7 +38,13 @@ export default function PdfUploader() {
                 setUploadStatus('Generating embeddings...');
                 const res = await LoadPdfEmbedings(data.url);
 
-                if (res) setUploadStatus('Embeddings generated successfully!')
+                if (res) {
+                    setUploadStatus('Embeddings generated successfully!')
+                            toastSuccess('collection added successfully!');
+                    
+                            client.invalidateQueries({ queryKey: ['modelsinfo'] });
+
+                }
             } else {
                 setUploadStatus(`Upload failed: ${data.error}`);
             }
@@ -45,9 +55,14 @@ export default function PdfUploader() {
     };
 
     return (
-        <div className=' card  mb-6 p-4 flex flex-col'>
-            <input type="file" accept="application/pdf" onChange={handleFileChange} />
-            <button onClick={handleUpload} hidden={!selectedFile} disabled={!selectedFile} className=' bg-blue-500 py-2 disabled:opacity-45 '>
+        <div className=' card  mb-6 p-4 py-5 rounded-3xl flex flex-col'>
+            <h2 className="text-2xl font-bold mb-4">Upload Pdf file</h2>
+            <label className=' h-[200px] rounded-3xl border-dashed border border-gray-500 center flex-col gap-3'>
+            <input className=' opacity-0' type="file" accept="application/pdf" onChange={handleFileChange} />
+            <Upload className=' mx-auto text-gray-400' size={48} />
+            <p className=' text-gray-400 '>Click to upload pdf file </p>
+            </label>
+            <button onClick={handleUpload} hidden={!selectedFile} disabled={!selectedFile} className=' bg-blue-600 px-4 py-2 rounded text-white mt-6 disabled:opacity-45 '>
                 Upload PDF
             </button>
             <p>{uploadStatus}</p>

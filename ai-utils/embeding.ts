@@ -16,7 +16,7 @@ const emmbeddings = new OpenAIEmbeddings({
 });
 
 const qclient = new QdrantClient({
-    url: 'https://044ba285-2d3a-44cd-b697-9608ce6873b9.eu-west-2-0.aws.cloud.qdrant.io:6333',
+    url: process.env.QDRANT_URL!,
     apiKey: process.env.QDRANT_API_KEY!,
 });
 
@@ -98,13 +98,12 @@ export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'we
     const res = await prisma.models.create({
         data: {
             collection_name: collecttion,
-            typeOf: type,
-            model_id: "",
+            source: type,
             userId: session?.user.id!,
         }
     })
 
-    return JSON.parse(JSON.stringify(docs));
+    return JSON.parse(JSON.stringify(res));
 }
 
 export const LoadPdfEmbedings = async (url: string ) => {
@@ -128,8 +127,7 @@ export const LoadPdfEmbedings = async (url: string ) => {
     const res = await prisma.models.create({
         data: {
             collection_name: session?.user.name + "_pdf_collection"+Date.now(),
-            typeOf: 'pdf',
-            model_id: "",
+            source: 'pdf',
             userId: session?.user.id!,
         }
     })

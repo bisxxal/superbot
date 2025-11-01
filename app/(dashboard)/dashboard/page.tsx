@@ -2,41 +2,48 @@
 
 import { generateEmbeddings } from "@/ai-utils/embeding"
 import PdfUploader from "@/components/pdfupload"
+import { toastError, toastSuccess } from "@/lib/toast"
 import BotennicaChatbot from "@/temp"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Loader, LoaderCircle } from "lucide-react"
 import { useSession } from "next-auth/react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 function DashBoardPage() {
   const { data } = useSession();
   const router = useRouter();
+  const client = useQueryClient();
 
   const [isLoading, setIsLoading] = useState<string | null>(null)
   const sumbitForm = async (formData: FormData) => {
     const youtube = formData.get("youtube") as string
     const website = formData.get("website") as string
     const textData = formData.get("textData") as string
-    
+
     try {
 
       if (youtube) {
         const collectionName = data?.user.name + "_youtube_collection"
         setIsLoading("Generating Youtube Embeddings...")
-        const res = await generateEmbeddings(youtube, 'yt', collectionName)
-        console.log("Youtube Embeddings:", res)
+        // const res = await generateEmbeddings(youtube, 'yt', collectionName)
+        createCollections.mutate({ textData: youtube, type: 'yt', collectionName })
+        // console.log("Youtube Embeddings:", res)
       }
       if (website) {
         setIsLoading("Generating Web Embeddings...")
         const collectionName = data?.user.name + "_web_collection"
-        const res = await generateEmbeddings(website, 'web', collectionName)
-        console.log("Website Embeddings:", res)
+        createCollections.mutate({ textData: website, type: 'web', collectionName })
+        // const res = await generateEmbeddings(website, 'web', collectionName)
+        // console.log("Website Embeddings:", res)
       }
       if (textData) {
         setIsLoading("Generating text Embeddings...")
         const collectionName = data?.user.name + "_text_collection"
-        const res = await generateEmbeddings(textData, 'text', collectionName)
-        console.log("Text Embeddings:", res)
+        createCollections.mutate({ textData, type: 'text', collectionName })
+        // const res = await generateEmbeddings(textData, 'text', collectionName)
+        // console.log("Text Embeddings:", res)
       }
     } catch (error) {
 
@@ -46,10 +53,28 @@ function DashBoardPage() {
     }
   }
 
+  const createCollections = useMutation({
+    mutationFn: async ({ textData, type, collectionName }: { textData: string, type: 'web'|'text'|'yt'; collectionName: string }) => {
+      return await generateEmbeddings(textData, type , collectionName);
+    },
+    onSuccess: (data) => {
+      localStorage.removeItem('subjectsData');
+      if (data.status === 200) {
+        toastSuccess('collection added successfully!');
+        client.invalidateQueries({ queryKey: ['modelsinfo'] });
+      } else {
+        toastSuccess('failed to add collection ');
+      }
+    },
+  });
+
   return (
     <div className=" w-full px-10">
-      <h1 className=" text-center font-bold text-4xl my-5">Build your rag model . </h1>
+      <h1 className=" text-center font-bold text-4xl my-5">Dashboard</h1>
 
+
+      <h2 className=" text-xl font-semibold">Upload Context</h2>
+      <p className=" text-lg text-gray-500 text-sm my-3">Upload documents or add text to train your AI chatbot. The more context you provide, the better your chatbot will perform.</p>
       {
         isLoading !== null && (
           <div className=" w-full card h-[70px] flex items-center justify-center mb-4">
@@ -61,24 +86,24 @@ function DashBoardPage() {
 
       <PdfUploader />
       <form action={sumbitForm}>
-        <div className="card  mb-6 p-4 flex flex-col">
-          <h2 className="text-2xl font-bold mb-4">Provide Youtube Video link</h2>
+        <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
+          <h2 className="text-2xl font-bold mb-4">Add YouTube Content</h2>
           <input
             type="text"
             name="youtube"
-            placeholder="Enter Youtube Video link"
+            placeholder="https://youtu.be/54wpqk927T8?si=WHeiBI-vO8tUbnKC"
             className="w-full p-2 mb-4 border  rounded"
           />
           <button className="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
 
         </div>
 
-        <div className="card  mb-6 p-4 flex flex-col">
-          <h2 className="text-2xl font-bold mb-4">Provide Website link</h2>
+        <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
+          <h2 className="text-2xl font-bold mb-4">Add Website Content</h2>
           <input
             type="text"
             name="website"
-            placeholder="Enter Website link"
+            placeholder="https://bisxxal.tech"
             className="w-full p-2 mb-4 border  rounded"
           />
           <button className="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
@@ -86,7 +111,7 @@ function DashBoardPage() {
         </div>
 
 
-        <div className="card  mb-6 p-4 flex flex-col">
+        <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
           <h2 className="text-2xl font-bold mb-4">Add text content</h2>
           <textarea
             rows={10}

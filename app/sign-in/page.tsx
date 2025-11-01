@@ -13,39 +13,16 @@ const SignInPage = () => {
     if(data?.user && status === 'authenticated') {
       router.push('/dashboard');
     }
- 
-  const [currentStat, setCurrentStat] = useState(0);
-  const stats = ['10K+ Students', '500+ Schools', '99.9% Uptime', '24/7 Support'];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStat((prev) => (prev + 1) % stats.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+   
 
   return (
-    <div className="min-h-screen flex" style={{ backgroundColor: '#0F0F1A' }}>
+    <div className="min-h-screen flex bg-[#FDFCFB] text-[#111827]"  >
 
        <div className="fixed inset-0 overflow-hidden pointer-events-none">
          {/* Floating Orbs */}
-         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
-         <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-gradient-to-r from-blue-500/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-         <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-gradient-to-r from-green-500/20 to-emerald-400/20 rounded-full blur-3xl animate-pulse delay-500"></div>      
-         <div className="absolute inset-0">
-           {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white/20 rounded-full animate-ping"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${3 + Math.random() * 4}s`
-              }}
-            ></div>
-          ))}
-        </div>
+         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-amber-500/20 to-red-500/20 rounded-full blur-3xl animate-pulse"></div>
+         <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-gradient-to-r from-indigo-500/20 to-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        
       </div>
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
@@ -62,17 +39,17 @@ const SignInPage = () => {
           <div className="text-center mb-8 appeartext ">
             <div className="flex items-center justify-center mb-6">
               <Link href={'/'} className=" w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center transform rotate-3 hover:rotate-6 transition-transform duration-300">
-                <Image loading='lazy' width={250} height={250} src="/logo.png" className="w-16 h-16 logoanimation drop-shadow-xl drop-shadow-[#0000006e] rotate-[16deg]  " alt="Logo" />
+                {/* <Image loading='lazy' width={250} height={250} src="/logo.png" className="w-16 h-16 logoanimation drop-shadow-xl drop-shadow-[#0000006e] rotate-[16deg]  " alt="Logo" /> */}
               </Link>
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">Welcome Back!</h1>
-            <p className="text-gray-400">Sign in to your Be Present account</p>
+            <p className="text-red-400">Sign in to your Superbot X account</p>
           </div>
 
           {/* Sign In Card */}
-          <div className="heroimgshadow bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700 p-8 shadow-2xl">
+          <div className="  bg-gradient-to-r from-amber-500/20 to-red-500/20  rounded-2xl border border-amber-500 p-8 shadow-2xl">
             <div className="text-center mb-6">
-              <h2 className="text-xl font-semibold text-white mb-2">Sign in with Google</h2>
+              <h2 className="text-xl font-semibold text-amber-500 mb-2">Sign in with Google</h2>
               <p className="text-gray-400 text-sm">Access your dashboard securely</p>
             </div>
 
@@ -108,25 +85,18 @@ const SignInPage = () => {
             </button>
 
             {/* Security Note */}
-            <div className="mt-6 p-4 bg-purple-500 bg-opacity-10 border border-purple-500 border-opacity-30 rounded-xl">
+            <div className="mt-6 p-4 bg-gradient-to-r from-amber-500   to-red-500  bg-opacity-10 border border-purple-500 border-opacity-30 rounded-xl">
               <div className="flex items-start">
-                <Shield className="w-5 h-5 text-purple-400 mr-3 mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-red-400 mr-3 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-purple-400 font-medium mb-1">Secure Authentication</p>
-                  <p className="text-xs text-gray-300">We use Google OAuth 2.0 for secure access. Your Google password is never shared with us.</p>
+                  <p className="text-sm text-red-100 font-medium mb-1">Secure Authentication</p>
+                  <p className="text-xs text-gray-200">We use Google OAuth 2.0 for secure access. Your Google password is never shared with us.</p>
                 </div>
               </div>
             </div>
  
           </div>
-
-          <div className="mb-8 animate-scale-up">
-            <div className="h-16 flex items-center justify-center">
-              <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent transition-all duration-500">
-                {stats[currentStat]}
-              </div>
-            </div>
-          </div> 
+ 
 
           <div className="mt-8 text-center">  
             <div className="flex justify-center space-x-6 text-xs text-gray-500">

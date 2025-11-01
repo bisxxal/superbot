@@ -10,20 +10,26 @@ export const userModels = async () => {
         if (!session) {
             return { status: 401, message: "Unauthorized" };
         }
-
         const res = await prisma.models.findMany({
             where: {
                 userId: session.user.id,
             },
-        }); 
+        });
 
-        
-        return {
+
+      if (res)
+          return {
             status: 200,
             res
         };
 
-        return session;
+
+        return {
+            status: 400,
+            message: 'No models found',
+        };
+
+        
 
     } catch (error) {
         return {

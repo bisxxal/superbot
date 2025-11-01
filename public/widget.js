@@ -1,10 +1,9 @@
 (function () {
   window.addEventListener("load", () => {
-    // const currentScript = document.currentScript;
-    // const siteId = currentScript?.getAttribute("data-site-id") ;
-    
     const scriptEl = document.getElementById("superbot-widget");
     const siteId = scriptEl?.getAttribute("data-site-id")  ;
+    const uniqueid = scriptEl?.getAttribute("data-unique-id")  ;
+    const welcomeMessage = scriptEl?.getAttribute("data-welcome-message") || "Hello! How can I assist you today?";
     // Create chat button
     const button = document.createElement("div");
     button.innerHTML = "💬";
@@ -28,7 +27,7 @@
 
     // Create iframe (hidden initially)
     const iframe = document.createElement("iframe");
-    iframe.src = `https://super-bot-x.vercel.app/embed?siteId=${siteId}`;
+    iframe.src = `https://super-bot-x.vercel.app/embed?siteId=${siteId}&id=${uniqueid}&welcomeMessage=${welcomeMessage}`;
     Object.assign(iframe.style, {
       position: "fixed",
       bottom: "90px",

@@ -3,10 +3,11 @@ import { chatAIAction } from "@/action/chat.ai";
 import { formatedText } from "@/lib/util";
 import { useState, useRef, useEffect } from "react"
 
-export default function ChatbotPage({ collections }: { collections: string }) {
+export default function ChatbotPage({ collections,welcomeMessage,id }: { collections: string,welcomeMessage: string,id:string }) {
 
-  console.log(collections,'in chatbot')
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>([])
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([
+    { role: "assistant", content: `<p>${welcomeMessage}</p>` }
+  ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
@@ -17,7 +18,7 @@ export default function ChatbotPage({ collections }: { collections: string }) {
 
   const handleSend = async () => {
 
-    if (!input.trim() || !collections ) return
+    if (!input.trim() || !collections || !id ) return
 
     const userMsg = { role: "user", content: input }
     setMessages((m) => [...m, userMsg])
@@ -25,7 +26,7 @@ export default function ChatbotPage({ collections }: { collections: string }) {
     setIsLoading(true)
 
     try {
-      const res = await chatAIAction(input, collections);
+      const res = await chatAIAction(input, collections ,id);
       const formattedResponse =  formatedText(res!);
       setMessages((m) => [...m, { role: "assistant", content: formattedResponse }])
     } catch (err) {

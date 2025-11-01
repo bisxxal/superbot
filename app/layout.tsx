@@ -25,17 +25,15 @@ export default function RootLayout({
           <div className=" relative w-full min-h-screen ">
             {children}
           </div>
-
           <BotennicaChatbot />
-        </QuaryClient>
+        </QuaryClient>        
 
-
-        <script
+         <script
           id="superbot-widget"
-
           src="https://super-bot-x.vercel.app/widget.js"
           data-site-id="Vishal B_pdf_collection1761938775522"
-
+          data-unique-id="cmhf8uz1o0001t0ht561e6rvt"
+          data-welcome-message="Hello! How can I assist you today?"
         ></script>
 
 
