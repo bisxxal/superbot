@@ -6,17 +6,18 @@
     const welcomeMessage = scriptEl?.getAttribute("data-welcome-message") || "Hello! How can I assist you today?";
     // Create chat button
     const button = document.createElement("div");
-    button.innerHTML = "💬";
+    button.innerHTML = "Ask Ai 💬";
     Object.assign(button.style, {
       position: "fixed",
       bottom: "20px",
       right: "20px",
-      width: "60px",
-      height: "60px",
+      width: "130px",
+      height: "40px",
       backgroundColor: "#2563eb",
+      backdropFilter: "blur(8px)",
       color: "white",
-      borderRadius: "50%",
-      fontSize: "28px",
+      borderRadius: "14px",
+      fontSize: "20px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -33,6 +34,7 @@
       bottom: "90px",
       right: "20px",
       width: "400px",
+      backdropFilter: "blur(8px)",
       height: "500px",
       border: "none",
       borderRadius: "12px",

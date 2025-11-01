@@ -9,19 +9,19 @@ import { QdrantVectorStore } from "@langchain/qdrant";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
+import { Document } from "@langchain/core/documents";
 
 const emmbeddings = new OpenAIEmbeddings({
     model: "text-embedding-3-small",
     apiKey: process.env.OPENAI_API_KEY,
 });
-
 const qclient = new QdrantClient({
     url: process.env.QDRANT_URL!,
     apiKey: process.env.QDRANT_API_KEY!,
 });
 
 
-export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'web', collecttion: string) => {
+export const generateEmbeddings = async (url: string, type: 'yt' | 'text' | 'web', collecttion: string) => {
 
     const session = await getServerSession(authOptions);
     let docs;
@@ -56,10 +56,10 @@ export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'we
             emmbeddings,
             {
                 client: qclient,
-                collectionName: session?.user.name + "_youtube_collection"+Date.now(),
+                collectionName: session?.user.name + "_youtube_collection" + Date.now(),
             }
         );
-
+            console.log(vectorStore)
     }
     if (type === 'web') {
         const loader = new CheerioWebBaseLoader(url);
@@ -83,7 +83,7 @@ export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'we
             emmbeddings,
             {
                 client: qclient,
-                collectionName: session?.user.name + "_web_collection"+Date.now(),
+                collectionName: session?.user.name + "_web_collection" + Date.now(),
             }
         );
 
@@ -91,6 +91,27 @@ export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'we
 
     }
     if (type === 'text') {
+        const splitter = new RecursiveCharacterTextSplitter({
+            chunkSize: 1000,
+            chunkOverlap: 200,
+        });
+        const rawDoc = new Document({
+            pageContent: url,
+            metadata: {
+                source_type: "text",
+            },
+        });
+
+        const splitDocs = await splitter.splitDocuments([rawDoc]);
+
+        const vectorStore = await QdrantVectorStore.fromDocuments(
+            splitDocs,
+            emmbeddings,
+            {
+                client: qclient,
+                collectionName: session?.user.name + "_text_collection" + Date.now(),
+            }
+        );
 
     }
 
@@ -106,7 +127,7 @@ export const generateEmbeddings = async (url: string, type:  'yt' | 'text' | 'we
     return JSON.parse(JSON.stringify(res));
 }
 
-export const LoadPdfEmbedings = async (url: string ) => {
+export const LoadPdfEmbedings = async (url: string) => {
     const session = await getServerSession(authOptions);
 
     const response = await fetch(url);
@@ -121,12 +142,12 @@ export const LoadPdfEmbedings = async (url: string ) => {
 
     const vectorStore = await QdrantVectorStore.fromDocuments(docs, emmbeddings, {
         client: qclient,
-        collectionName: session?.user.name + "_pdf_collection"+Date.now(),
+        collectionName: session?.user.name + "_pdf_collection" + Date.now(),
     })
 
     const res = await prisma.models.create({
         data: {
-            collection_name: session?.user.name + "_pdf_collection"+Date.now(),
+            collection_name: session?.user.name + "_pdf_collection" + Date.now(),
             source: 'pdf',
             userId: session?.user.id!,
         }

@@ -36,6 +36,7 @@ export const useGetModels = () => {
         }
     }, [data]);
 
+    console.log(data)
     return {
         data: localData,
         isLoading: isCheckingLocal || (localData === null && isLoading),

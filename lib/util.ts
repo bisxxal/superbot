@@ -17,7 +17,7 @@ formattedResponse = formattedResponse
   .map((text, index) =>
     index % 2 !== 1
       ? text
-      : `<span class='font-bold text-blue-400'>${text}</span>`
+      : `<span class='font-bold text-blue-500'>${text}</span>`
   )
   .join("")
 
@@ -25,9 +25,27 @@ formattedResponse = formattedResponse
 formattedResponse = formattedResponse.split("*").join("<br/>")
 
 // ✅ Replace `link` or `inline code`
-formattedResponse = formattedResponse.replace(/`(https?:\/\/[^\s`]+)`/g, (match, url) => {
-  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-400 underline hover:text-blue-500">${url}</a>`
-})
+// formattedResponse = formattedResponse.replace(/`(https?:\/\/[^\s`]+|https?:)`/g, (match, url) => {
+//   return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline hover:text-blue-500">${url}</a>`
+// })
+
+// First replace the inline URL markdown
+formattedResponse = formattedResponse.replace(
+  /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+  (match, text, url) => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-400 underline hover:text-blue-500">${text}</a>`
+  }
+);
+
+// Then do your existing regex for back-ticked URLs or just protocols
+formattedResponse = formattedResponse.replace(
+  /`(https?:\/\/[^\s`]+|https?:)`/g,
+  (match, url) => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-400 underline hover:text-blue-500">${url}</a>`
+  }
+);
+
+
 
 // ✅ Handle inline code (non-link)
 formattedResponse = formattedResponse.replace(/`([^`]+)`/g, (match, code) => {

@@ -37,7 +37,7 @@ export const chatAIAction = async (userQuary: string, collection: string, id:str
 
     const SYSTEM_POMPT = `You are a helpful AI assistant. who helps resoving user quary based on the context available to you . also provide some useful link if needed.
     
-    only answer based in the avaliable context from the file.
+    only answer based in the avaliable context .
     
     Contex:
     ${JSON.stringify(releventChunk)}

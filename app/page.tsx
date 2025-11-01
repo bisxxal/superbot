@@ -1,24 +1,30 @@
 'use client'
 import { ArrowRight } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
 
+      const { data, status } = useSession();
+  
+
   const [show, setShow] = useState(true);
   return (
     <div className=" w-full min-h-screen bg-[#FDFCFB] text-[#111827]  ">
       <nav className="h-[70px] flex w-full justify-between px-5 items-center border-b border-[#111827] ">
-        <Link href="/"> Superbot X </Link>
-        <Link className="bg-[#F16230] px-4 py-2 rounded-full text-white shadow-xl" href="/sign-in">
+        <Link className=" textbg text-3xl font-bold" href="/"> Superbot X </Link>
+         { data?.user ?  <Link className="bg-[#F16230] px-4 py-2 rounded-full text-white shadow-xl" href="/dashboard">
+         Go to Dashboard
+        </Link>  :  <Link className="bg-[#F16230] px-4 py-2 rounded-full text-white shadow-xl" href="/sign-in">
           Sign-in
-        </Link>
+        </Link>}
       </nav>
 
       <div className=" px-20 py-6 mt-[50px] max-md:px-2 w-full">
-        <div className=" mx-auto w-fit border rounded-full  ">
-          <button onClick={() => setShow(true)} className={`${show ? 'buttonbg shadow-xl' : ''} px-5 rounded-full py-2`}>Ai bot</button>
-          <button onClick={() => setShow(false)} className={`${!show ? 'buttonbg shadow-xl' : ''} px-5 rounded-full py-2`}>Notebook</button>
+        <div className=" mx-auto w-fit border rounded-full  p-1">
+          <button onClick={() => setShow(true)} className={`${show ? 'buttonbg shadow-xl' : ''} px-5 !rounded-full py-2`}>Ai bot</button>
+          <button onClick={() => setShow(false)} className={`${!show ? 'buttonbg shadow-xl' : ''} px-5 !rounded-full py-2`}>Notebook</button>
         </div>
         {show ? <AiBot /> : <NotebookLLm />}
 

@@ -28,13 +28,13 @@ export default function RootLayout({
           <BotennicaChatbot />
         </QuaryClient>        
 
-         <script
+         {/* <script
           id="superbot-widget"
-          src="https://super-bot-x.vercel.app/widget.js"
+          src="http://localhost:3000/widget.js"
           data-site-id="Vishal B_pdf_collection1761938775522"
           data-unique-id="cmhf8uz1o0001t0ht561e6rvt"
           data-welcome-message="Hello! How can I assist you today?"
-        ></script>
+        ></script> */}
 
 
       </body>

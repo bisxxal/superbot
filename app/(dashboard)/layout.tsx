@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Be Present ",
+  title: "Dashboard | SuperBot X",
 };
 
 export default function RootLayout({

@@ -2,10 +2,10 @@ import toast from "react-hot-toast";
 
 export const toastSuccess = (message: string) => {
     toast.success(message, {
-        icon: '👏',
+        icon: '✅',
         style: {
             borderRadius: '20px',
-            background: '#ffffff00',
+            background: '#11182778',
             border: '1px solid #ffffff30',
             backdropFilter: 'blur(10px)',
             color: '#fff',
@@ -17,7 +17,7 @@ export const toastError = (message: string) => {
         icon: '❌',
         style: {
             borderRadius: '20px',
-            background: '#ff031017',
+            background: '#11182778',
             border: '1px solid #ff03107d',
             backdropFilter: 'blur(10px)',
             color: '#fff',

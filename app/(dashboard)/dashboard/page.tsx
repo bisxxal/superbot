@@ -1,13 +1,10 @@
 "use client"
-
 import { generateEmbeddings } from "@/ai-utils/embeding"
 import PdfUploader from "@/components/pdfupload"
-import { toastError, toastSuccess } from "@/lib/toast"
-import BotennicaChatbot from "@/temp"
+import { toastSuccess } from "@/lib/toast"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Loader, LoaderCircle } from "lucide-react"
+import { LoaderCircle } from "lucide-react"
 import { useSession } from "next-auth/react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -23,11 +20,9 @@ function DashBoardPage() {
     const textData = formData.get("textData") as string
 
     try {
-
       if (youtube) {
         const collectionName = data?.user.name + "_youtube_collection"
         setIsLoading("Generating Youtube Embeddings...")
-        // const res = await generateEmbeddings(youtube, 'yt', collectionName)
         createCollections.mutate({ textData: youtube, type: 'yt', collectionName })
         // console.log("Youtube Embeddings:", res)
       }
@@ -35,14 +30,12 @@ function DashBoardPage() {
         setIsLoading("Generating Web Embeddings...")
         const collectionName = data?.user.name + "_web_collection"
         createCollections.mutate({ textData: website, type: 'web', collectionName })
-        // const res = await generateEmbeddings(website, 'web', collectionName)
         // console.log("Website Embeddings:", res)
       }
       if (textData) {
         setIsLoading("Generating text Embeddings...")
         const collectionName = data?.user.name + "_text_collection"
         createCollections.mutate({ textData, type: 'text', collectionName })
-        // const res = await generateEmbeddings(textData, 'text', collectionName)
         // console.log("Text Embeddings:", res)
       }
     } catch (error) {
@@ -58,8 +51,7 @@ function DashBoardPage() {
       return await generateEmbeddings(textData, type , collectionName);
     },
     onSuccess: (data) => {
-      localStorage.removeItem('subjectsData');
-      if (data.status === 200) {
+      if (data ) {
         toastSuccess('collection added successfully!');
         client.invalidateQueries({ queryKey: ['modelsinfo'] });
       } else {
@@ -71,10 +63,16 @@ function DashBoardPage() {
   return (
     <div className=" w-full px-10">
       <h1 className=" text-center font-bold text-4xl my-5">Dashboard</h1>
-
-
       <h2 className=" text-xl font-semibold">Upload Context</h2>
-      <p className=" text-lg text-gray-500 text-sm my-3">Upload documents or add text to train your AI chatbot. The more context you provide, the better your chatbot will perform.</p>
+      <p className=" text-gray-500 text-sm my-3">Upload documents or add text to train your AI chatbot. The more context you provide, the better your chatbot will perform.</p>
+
+      {
+        createCollections.isPending && <div className=" w-full rounded-3xl text-blue-500 card h-[70px] flex items-center justify-center mb-4">
+          <LoaderCircle className=" animate-spin mr-2" />
+          <p className=" text-lg font-medium">Creating collection...</p>
+        </div>
+      }
+
       {
         isLoading !== null && (
           <div className=" w-full card h-[70px] flex items-center justify-center mb-4">
@@ -87,42 +85,41 @@ function DashBoardPage() {
       <PdfUploader />
       <form action={sumbitForm}>
         <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
-          <h2 className="text-2xl font-bold mb-4">Add YouTube Content</h2>
+          <h2 className="text-2xl text-gray-700 font-bold mb-4">Add YouTube Content</h2>
           <input
             type="text"
             name="youtube"
             placeholder="https://youtu.be/54wpqk927T8?si=WHeiBI-vO8tUbnKC"
-            className="w-full p-2 mb-4 border  rounded"
+            className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
           />
-          <button className="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
-
+          <button disabled={createCollections.isPending} className="bg-blue-600 disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
         </div>
 
         <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
-          <h2 className="text-2xl font-bold mb-4">Add Website Content</h2>
+          <h2 className="text-2xl text-gray-700 font-bold mb-4">Add Website Content</h2>
           <input
             type="text"
             name="website"
             placeholder="https://bisxxal.tech"
-            className="w-full p-2 mb-4 border  rounded"
+            className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
           />
-          <button className="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
+          <button disabled={createCollections.isPending} className="bg-blue-600 disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
 
         </div>
 
 
         <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
-          <h2 className="text-2xl font-bold mb-4">Add text content</h2>
+          <h2 className="text-2xl text-gray-700 font-bold mb-4">Add text content</h2>
           <textarea
             rows={10}
             name="textData"
-            className="w-full p-2 mb-4 border  rounded"
+            className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
 
             placeholder="
 Paste or type additional context here... (e.g., FAQ answers, product descriptions, company policies)
 You can add up to 10,000 characters of text context."
           />
-          <button className="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
+          <button disabled={createCollections.isPending} className="bg-blue-600 disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
 
         </div>
 

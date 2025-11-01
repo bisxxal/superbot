@@ -29,3 +29,6 @@ body {
 .textbg{
  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-red-500;
 }
+button{
+ cursor: pointer;
+}

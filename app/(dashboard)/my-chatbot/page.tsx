@@ -1,7 +1,6 @@
 'use client'
 import Loading from '@/components/ui/loading'
 import { useGetModels } from '@/hooks/useModel'
-import { useQuery } from '@tanstack/react-query'
 import { Bot, BotIcon, Dot, RefreshCcw } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -36,12 +35,12 @@ const MyChatBot = () => {
                       <div className=' flex gap-2.5 flex-wrap '>
 
                         {data.res.map((model: any) => (
-                          <div className=' card rounded-2xl p-3 px-4 w-[500px] ' key={model.id}>
+                          <Link href={`embed?siteId=${model.collection_name}&id=${model.id}&welcomeMessage=hi how can i assist you`} className=' card rounded-2xl p-3 px-4 w-[500px] ' key={model.id}>
 
                             <div className=' flex items-center justify-between px-5 gap-2'>
                               <div className=' bg-amber-300 mb-3 p-2 w-fit rounded-xl'><Bot /> </div>
                               <div className=' flex items-end gap-2 flex-col'>
-                                <div className=' bg-green-500/50 text-green-600 px-2 py-1 rounded-2xl center w-fit'> <Dot color='green' /> Active</div>
+                                <div className=' bg-green-500/50 text-green-600 px-2 py-1 rounded-2xl center w-fit'> <Dot className=' animate-pulse text-xl' color='green' size={28} /> Active</div>
                                 <p>Contex from : {model?.source?.toUpperCase()}</p>
                                 <p>Conversations : {model?.times}</p>
                               </div>
@@ -51,7 +50,7 @@ const MyChatBot = () => {
                             <p className=' mt-3 text-zinc-600 text-sm'>Model id : {model.id}</p>
                             <p className=' mt-3 text-zinc-600 text-sm'>Last active at : {model.updated_at.toLocaleString("en-US")}</p>
                             <p className=' mt-3 text-zinc-600 text-sm'>Created at : {model.created_at.toLocaleString("en-US")}</p>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     )
