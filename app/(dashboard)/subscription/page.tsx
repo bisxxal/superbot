@@ -56,7 +56,7 @@ const Subscription = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-6 sm:px-8">
+    <div className="min-h-screen   py-16 px-6 sm:px-8">
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-4xl font-bold textbg mb-4">
           Superbot X Subscription Plans
@@ -70,10 +70,10 @@ const Subscription = () => {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`rounded-2xl shadow-md border p-8 flex flex-col transition-all duration-200 ${
-                plan.active
-                  ? "border-amber-600 bg-amber-50 scale-105"
-                  : "border-gray-200 bg-white hover:shadow-lg"
+              className={`rounded-2xl hover:scale-[1.05] transition-all shadow-md border p-8 flex flex-col transition-all duration-200 ${
+                plan.active 
+                  ? "bordercolor card scale-105"
+                  : "border-none bg-[#cb114015] hover:shadow-lg"
               }`}
             >
               <h2
@@ -117,7 +117,7 @@ const Subscription = () => {
                 className={`mt-auto py-3 px-6 rounded-lg font-medium transition ${
                   plan.active
                     ? "buttonbg !rounded-lg text-white cursor-default"
-                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                    : "bg-[#cb11403e] text-white hover:bg-gray-200"
                 }`}
               >
                 {plan.buttonText}

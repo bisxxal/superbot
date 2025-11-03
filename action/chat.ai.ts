@@ -6,7 +6,7 @@ import { QdrantVectorStore } from "@langchain/qdrant";
 import prisma from "@/lib/prisma";
 
 const qclient = new QdrantClient({
-    url: 'https://044ba285-2d3a-44cd-b697-9608ce6873b9.eu-west-2-0.aws.cloud.qdrant.io:6333',
+    url: process.env.QDRANT_URL!,
     apiKey: process.env.QDRANT_API_KEY!,
 });
 

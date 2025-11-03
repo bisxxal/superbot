@@ -24,8 +24,8 @@ const Source = ({setChat} :{setChat:Dispatch< SetStateAction<{
     const { data, isLoading } = useNotebookModels();
  
     return (
-        <div className='border card rounded-2xl w-[25%] mt-10'>
-            <p className='rounded-t-2xl bg-amber-500/30 p-2.5 text-gray-700'>Sources</p>
+        <div className='border card bordercolor rounded-2xl w-[25%] mt-10'>
+            <p className='rounded-t-2xl card p-2.5 text-gray-700'>Sources</p>
 
             <div className=' p-2'>
                 <button onClick={() => setShow(true)} className='w-full my-4 py-2 gap-3 center border border-gray-600 rounded-full'> <Plus /> Sources</button>
@@ -60,8 +60,8 @@ const Source = ({setChat} :{setChat:Dispatch< SetStateAction<{
 }
 const ChatCom = ({chat}:{chat: { collections: string ;id: string}}) => {
     return (
-        <div className='border relative card rounded-2xl w-[75%] overflow-hi mt-10'>
-            <p className=' bg-amber-500/30 p-2.5 rounded-t-2xl text-gray-700'>Chat</p>
+        <div className='border bordercolor relative card rounded-2xl w-[75%] overflow-hi mt-10'>
+            <p className=' card p-2.5 rounded-t-2xl text-gray-700'>Chat</p>
 
             <div className=' !pb-2 h-full'>
                 <NotebookChatbot collections={chat.collections} id={chat.id} />

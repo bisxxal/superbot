@@ -9,7 +9,7 @@ export default function Home() {
   const { data } = useSession();
   const [show, setShow] = useState(true);
   return (
-    <div className=" w-full relative min-h-screen bg-[#FDFCFB] text-[#111827]  ">
+    <div className=" w-full relative min-h-screen bg-[#E1E5F0] text-[#111827]  ">
       <nav className=" !h-[60px] top-0 left-0 backdrop-blur-2xl z-[30] fixed flex w-full justify-between px-5 items-center border-b border-[#ffc16a] ">
         <Link className=" textbg text-3xl font-bold" href="/"> Superbot X </Link>
         {data?.user ? <Link className="bg-[#F16230] px-4 py-2 rounded-full text-white shadow-xl" href="/dashboard">
@@ -89,7 +89,7 @@ export default function Home() {
 const AiBot = () => {
   return (
     <div className=" mt-20" >
-      <h1 className="w-[70%] mx-auto text-center font-bold text-5xl md:text-7xl  tracking-tighter mt-1 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-red-500 pb-2 font-space-mono ">Transform Your Website with
+      <h1 className="w-[70%] mx-auto text-center font-bold text-5xl md:text-7xl  tracking-tighter mt-1 bg-clip-text text-transparent textbg pb-2 font-space-mono ">Transform Your Website with
         Intelligent AI Chatbots</h1>
 
       <p className=" mt-20 text-center w-[70%] mx-auto">Upload documents, add YouTube videos, extract website content, or paste text to train your AI chatbot. Generate custom scripts and embed them on your website for instant, intelligent customer support.</p>
@@ -125,7 +125,7 @@ const NotebookLLm = () => {
           Understand Anything </h1>
         <p className="text-gray-500 mt-[50px] text-center ">Your research and thinking partner, grounded in the information you trust </p>
         <div className="center">
-          <Link href={`/dashboard`} className=" buttonbg mt-20 text-2xl  mx-auto  px-5 py-3 text-white rounded-2xl">Try Superbot X now</Link>
+          <Link href={`/notedashboard`} className=" buttonbg mt-20 text-2xl  mx-auto  px-5 py-3 text-white rounded-2xl">Try Superbot X now</Link>
         </div>
       </div>
       <div className=" gap-5">

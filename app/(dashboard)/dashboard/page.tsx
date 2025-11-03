@@ -68,9 +68,9 @@ function DashBoardPage() {
             type="text"
             name="youtube"
             placeholder="https://youtu.be/54wpqk927T8?si=WHeiBI-vO8tUbnKC"
-            className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
+            className="w-full p-2 mb-4 border-2 bordercolor outline-none placeholder:text-amber-900/30 !rounded-xl"
           />
-          <button disabled={createCollections.isPending} className="bg-blue-600 disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
+          <button disabled={createCollections.isPending} className="buttonbg disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
         </div>
 
         <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
@@ -79,9 +79,9 @@ function DashBoardPage() {
             type="text"
             name="website"
             placeholder="https://bisxxal.tech"
-            className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
+            className="w-full p-2 mb-4 border-2 bordercolor outline-none placeholder:text-amber-900/30 !rounded-xl"
           />
-          <button disabled={createCollections.isPending} className="bg-blue-600 disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
+          <button disabled={createCollections.isPending} className="buttonbg disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
 
         </div>
 
@@ -91,13 +91,13 @@ function DashBoardPage() {
           <textarea
             rows={10}
             name="textData"
-            className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
+            className="w-full p-2 mb-4 border-2 bordercolor outline-none placeholder:text-amber-900/30 !rounded-xl"
 
             placeholder="
 Paste or type additional context here... (e.g., FAQ answers, product descriptions, company policies)
 You can add up to 10,000 characters of text context."
           />
-          <button disabled={createCollections.isPending} className="bg-blue-600 disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
+          <button disabled={createCollections.isPending} className="buttonbg disabled:opacity-20 px-4 py-2 rounded text-white">Submit</button>
 
         </div>
 

@@ -65,7 +65,7 @@ const ScriptsPage = () => {
               <option value="">Select Chatbot</option>
               {chatbots?.res?.map((chatbot, index) => (
                 <option key={index} value={chatbot.collection_name}>
-                  {chatbot.collection_name}
+                  {chatbot.name ? chatbot.name : chatbot.collection_name}
                 </option>
               ))}
             </select>

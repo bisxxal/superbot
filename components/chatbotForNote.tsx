@@ -54,8 +54,8 @@ export default function NotebookChatbot({ collections, id }: { collections: stri
           >
             <div
               className={`max-w-[80%] px-4 py-2 rounded-2xl text-sm leading-relaxed ${msg.role === "user"
-                ? "bg-amber-500 text-white rounded-br-none"
-                : "bg-amber-600/40 text-gray-700  rounded-bl-none"
+                ? "bg-[#cb1140c5] text-white rounded-br-none"
+                : "card text-gray-700  rounded-bl-none"
                 }`}
               dangerouslySetInnerHTML={{ __html: msg.content }}
             />
@@ -64,13 +64,13 @@ export default function NotebookChatbot({ collections, id }: { collections: stri
 
         {
           isLoading && (
-            <div className="flex justify-start">
-              <div className="max-w-[75%] px-4 py-2 rounded-2xl text-sm leading-relaxed bg-amber-500 rounded-bl-none animate-pulse">
-                <div className="flex flex-row gap-2">
-                  <div className="w-3 h-3 rounded-full bg-amber-700 animate-bounce"></div>
-                  <div className="w-3 h-3 rounded-full bg-amber-700 animate-bounce [animation-delay:-.3s]"></div>
-                  <div className="w-3 h-3 rounded-full bg-amber-700 animate-bounce [animation-delay:-.5s]"></div>
-                </div>
+             <div className="flex justify-start">
+              <div className="max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed card rounded-bl-none animate-pulse">
+                   <div className="flex flex-row gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#cb1140c5] animate-bounce"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#cb1140c5] animate-bounce [animation-delay:-.3s]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#cb1140c5] animate-bounce [animation-delay:-.5s]"></div>
+                  </div>
               </div>
             </div>
           )
@@ -78,17 +78,17 @@ export default function NotebookChatbot({ collections, id }: { collections: stri
         <div ref={chatEndRef} />
       </div>
 
-      <div className="flex items-center bg-amber-500/20 border border-amber-800 rounded-full px-4 py-2">
+      <div className="flex items-center card border bordercolor rounded-full px-4 py-2">
         <input
-          type="text"
+            type="text"
           className="flex-1 bg-transparent outline-none text-zinc-700 placeholder-gray-400"
           placeholder="Ask me anything..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
-        <button
-          className="ml-2 bg-amber-600 hover:bg-amber-700 transition-colors px-4 py-2 rounded-full text-sm font-medium"
+         <button
+          className="ml-2 buttonbg  transition-colors px-4 py-2 rounded-full text-sm font-medium"
           onClick={handleSend}
         >
           Send

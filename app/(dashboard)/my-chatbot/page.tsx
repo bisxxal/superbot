@@ -41,19 +41,19 @@ console.log(result);
 
       <div className=' flex justify-between px-5 '>
         <h1 className='text-gray-600 ml-5 text-4xl font-bold my-5 mt-10'>My Chatbots</h1>
-        <button className='w-fit h-[50px] buttonbg px-4 py-0 !rounded-full center gap-3' onClick={() => refetchTimeTable()}>Refetch <RefreshCcw size={20} /> </button>
+        <button className='w-fit h-[40px] buttonbg px-4 py-0 !rounded-full center gap-3' onClick={() => refetchTimeTable()}>Refetch <RefreshCcw size={20} /> </button>
       </div>
 
       <div className=' flex items-center justify-evenly mb-10'>
-        <div className=' w-[30%] shadow-xl h-[100px] border-amber-500 border center rounded-3xl flex-col'>
+        <div className=' w-[30%] shadow-xl h-[100px] bordercolor border center rounded-3xl flex-col'>
           <p className='textbg'>Total chatbots</p>
           <p className=' text-3xl text-green-500 font-bold'>{data?.res.length}</p>
         </div>
-        <div className=' w-[30%] shadow-xl h-[100px] border-amber-500 border center rounded-3xl flex-col'>
+        <div className=' w-[30%] shadow-xl h-[100px] bordercolor border center rounded-3xl flex-col'>
           <p className='textbg'>Total Conversations</p>
           <p className=' text-3xl text-green-500 font-bold'>{toallConversations?.totalTimes} / 100</p>
         </div>
-        <div className=' w-[30%] shadow-xl h-[100px] border-amber-500 border center rounded-3xl flex-col'>
+        <div className=' w-[30%] shadow-xl h-[100px] bordercolor border center rounded-3xl flex-col'>
           <p className=' textbg'>Context Sources</p>
           <p className=' text-3xl text-green-500 font-bold'>{toallConversations?.totalSources}</p>
         </div>
@@ -79,10 +79,10 @@ console.log(result);
                     ) : (
                       <div className=' flex gap-2.5 flex-wrap '>
                         {data.res.map((model: any) => (
-                          <Link href={`embed?siteId=${model.collection_name}&id=${model.id}&welcomeMessage=hi how can i assist you`} className=' card border border-amber-500 rounded-2xl p-3 px-4 w-[460px] ' key={model.id}>
+                          <Link href={`embed?siteId=${model.collection_name}&id=${model.id}&welcomeMessage=hi how can i assist you`} className=' card border bordercolor rounded-2xl p-3 px-4 w-[460px] ' key={model.id}>
 
                             <div className=' flex items-center justify-between px-5 gap-2'>
-                              <div className=' bg-amber-300 mb-3 p-2 w-fit rounded-xl'><Bot className=' text-amber-600' /> </div>
+                              <div className=' bg-[#cb1140c5] mb-3 p-2 w-fit rounded-xl'><Bot className=' text-[#f9d3dde9]' /> </div>
                               <div className=' flex items-end gap-2 flex-col'>
                                 <div className=' bg-green-500/50 text-green-600 pr-2 rounded-full center w-fit'> <DotIcon className=' animate-pulse text-xl' color='green' size={28} /> Active</div>                                <p>Contex from : {model?.source?.toUpperCase()}</p>
                                 <p>Conversations : {model?.times}</p>

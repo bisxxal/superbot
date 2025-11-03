@@ -16,7 +16,7 @@ const SignInPage = () => {
 
 
   return (
-    <div className="min-h-screen flex bg-[#FDFCFB] text-[#111827]"  >
+    <div className="min-h-screen flex text-[#111827]"  >
 
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Floating Orbs */}

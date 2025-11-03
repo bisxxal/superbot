@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
- @apply bg-[#FDFCFB] text-[#111827];
+ @apply bg-[#E1E5F0] text-[#111827];
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -11,7 +11,10 @@ body {
   align-items: center;
 }
 .card {
-  background: #e3d4bb59;
+    @apply    bg-gradient-to-t  from-[#e8395922] to-[#fd4e6b17] ;
+}
+.bordercolor{
+  border-color: #e426264b
 }
 @keyframes pulseShimmer {
   from {
@@ -23,11 +26,12 @@ body {
 }
 
 .buttonbg{
-   /* box-shadow: inset -12px -7px 17px 11px #00000017, 0 8px 10px -6px #0000001a ; */
-  @apply text-white px-4  transition-all  duration-500 rounded-full bg-gradient-to-br  from-amber-200 to-amber-600 ;
+   box-shadow: inset -12px -7px 17px 11px #00000017, 0 8px 10px -6px #0000001a ;
+  /* @apply text-white px-4  transition-all  duration-500 rounded-full bg-gradient-to-br  from-amber-200 to-amber-600 ; */
+  @apply text-white px-4  transition-all  duration-500 rounded-full bg-gradient-to-br  from-[#CB1141] to-[#FD4E6A] ;
 }
 .textbg{
- @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-red-500;
+ @apply bg-clip-text text-transparent bg-gradient-to-r from-[#CB1141] to-[#FD4E6A];
 }
 button{
  cursor: pointer;

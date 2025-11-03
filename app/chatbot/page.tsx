@@ -37,7 +37,7 @@ export default function ChatbotPage({ collections,welcomeMessage,id }: { collect
   }
 
   return (
-    <div className="flex flex-col h-screen max-h-screen bg-[#0000002a] backdrop-blur-[10px] text-white rounded-lg shadow-lg p-4">
+    <div className="flex flex-col h-screen max-h-screen  backdrop-blur-[10px] text-white rounded-lg shadow-lg p-4">
       {/* Chat messages */}
       <div className="flex-1 overflow-y-auto space-y-4 p-2 mb-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
        
@@ -48,8 +48,8 @@ export default function ChatbotPage({ collections,welcomeMessage,id }: { collect
           >
             <div
               className={`max-w-[80%] px-4 py-2 rounded-2xl text-sm leading-relaxed ${msg.role === "user"
-                ? "bg-amber-500 text-white rounded-br-none"
-                : "bg-amber-600/40 text-gray-700  rounded-bl-none"
+                ? "bg-[#cb1140c5] text-white rounded-br-none"
+                : "card text-gray-700  rounded-bl-none"
                 }`}
               dangerouslySetInnerHTML={{ __html: msg.content }}
             />
@@ -58,12 +58,12 @@ export default function ChatbotPage({ collections,welcomeMessage,id }: { collect
 
         {
           isLoading && (
-            <div className="flex justify-start">
-              <div className="max-w-[75%] px-4 py-2 rounded-2xl text-sm leading-relaxed bg-amber-500 rounded-bl-none animate-pulse">
+           <div className="flex justify-start">
+              <div className="max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed card rounded-bl-none animate-pulse">
                    <div className="flex flex-row gap-2">
-                    <div className="w-3 h-3 rounded-full bg-amber-700 animate-bounce"></div>
-                    <div className="w-3 h-3 rounded-full bg-amber-700 animate-bounce [animation-delay:-.3s]"></div>
-                    <div className="w-3 h-3 rounded-full bg-amber-700 animate-bounce [animation-delay:-.5s]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#cb1140c5] animate-bounce"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#cb1140c5] animate-bounce [animation-delay:-.3s]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#cb1140c5] animate-bounce [animation-delay:-.5s]"></div>
                   </div>
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function ChatbotPage({ collections,welcomeMessage,id }: { collect
 
        
  
-      <div className="flex items-center bg-amber-500/20 border border-amber-800 rounded-full px-4 py-2">
+      <div className="flex items-center card border bordercolor rounded-full px-4 py-2">
         <input
           type="text"
           className="flex-1 bg-transparent outline-none text-zinc-700 placeholder-gray-400"
@@ -84,7 +84,7 @@ export default function ChatbotPage({ collections,welcomeMessage,id }: { collect
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
         <button
-          className="ml-2 bg-amber-600 hover:bg-amber-700 transition-colors px-4 py-2 rounded-full text-sm font-medium"
+          className="ml-2 buttonbg  transition-colors px-4 py-2 rounded-full text-sm font-medium"
           onClick={handleSend}
         >
           Send

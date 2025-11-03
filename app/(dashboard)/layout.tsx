@@ -18,6 +18,5 @@ export default function RootLayout({
         {children}
       </div>
     </main>
-
   );
 }
