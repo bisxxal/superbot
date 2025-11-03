@@ -47,7 +47,6 @@ const ScriptsPage = () => {
     }
   }
 
-  console.log(selectedChatbot)
   return (
     <div>
       <h2 className=' text-2xl font-semibold '>Generate Embed Script

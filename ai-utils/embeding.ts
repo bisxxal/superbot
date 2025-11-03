@@ -21,138 +21,181 @@ const qclient = new QdrantClient({
 });
 
 
-export const generateEmbeddings = async (url: string, type: 'yt' | 'text' | 'web', collecttion: string) => {
+export const generateEmbeddings = async (url: string, type: 'yt' | 'text' | 'web', collecttion: string, mode: 'bot' | 'notebook') => {
+    // LoadPdfEmbedings('https://ik.imagekit.io/cqy7eyhof/pdfs/attentionisallyouneed_zV4DPNxQn.pdf?updatedAt=1761894007781','pdf')
 
     const session = await getServerSession(authOptions);
+    const userId = session?.user.id!;
     let docs;
-
+    let name
     if (!url && !collecttion && !type) {
         return "Invalid parameters"
     }
     if (type === 'yt') {
-        const loader = YoutubeLoader.createFromUrl(url, {
-            language: "en",
-            addVideoInfo: true,
-        });
-        docs = await loader.load();
+        try {
+            const loader = YoutubeLoader.createFromUrl(url, {
+                language: "en",
+                addVideoInfo: true,
+            });
+            docs = await loader.load();
 
-        const splitter = new RecursiveCharacterTextSplitter({
-            chunkSize: 1000,
-            chunkOverlap: 200,
-        });
-        const splitDocs = await splitter.splitDocuments(docs);
+            const splitter = new RecursiveCharacterTextSplitter({
+                chunkSize: 1000,
+                chunkOverlap: 200,
+            });
+            const splitDocs = await splitter.splitDocuments(docs);
 
-        const enrichedDocs = splitDocs.map((doc) => ({
-            ...doc,
-            metadata: {
-                ...doc.metadata,
-                video_url: url,
-                source: "youtube",
-            },
-        }));
+            const enrichedDocs = splitDocs.map((doc) => ({
+                ...doc,
+                metadata: {
+                    ...doc.metadata,
+                    video_url: url,
+                    source: "youtube",
+                },
+            }));
+            name = enrichedDocs[0].metadata?.title;
 
-        const vectorStore = await QdrantVectorStore.fromDocuments(
-            enrichedDocs,
-            emmbeddings,
-            {
-                client: qclient,
-                collectionName: session?.user.name + "_youtube_collection" + Date.now(),
-            }
-        );
-            console.log(vectorStore)
+            const vectorStore = await QdrantVectorStore.fromDocuments(
+                enrichedDocs,
+                emmbeddings,
+                {
+                    client: qclient,
+                    collectionName: collecttion,
+                }
+            );
+            const res = createModelsInPrisma(collecttion, type, mode, name, userId);
+            return JSON.parse(JSON.stringify(res));
+
+        } catch (error) {
+
+        }
+
     }
     if (type === 'web') {
-        const loader = new CheerioWebBaseLoader(url);
-        docs = await loader.load();
-        const splitter = new RecursiveCharacterTextSplitter({
-            chunkSize: 1000,
-            chunkOverlap: 200,
-        });
-        const splitDocs = await splitter.splitDocuments(docs);
-        const enrichedDocs = splitDocs.map((doc) => ({
-            ...doc,
-            metadata: {
-                ...doc.metadata,
-                source_url: url,
-                source_type: "web",
-            },
-        }));
+        try {
+            const loader = new CheerioWebBaseLoader(url);
+            docs = await loader.load();
+            const splitter = new RecursiveCharacterTextSplitter({
+                chunkSize: 1000,
+                chunkOverlap: 200,
+            });
+            const splitDocs = await splitter.splitDocuments(docs);
+            const enrichedDocs = splitDocs.map((doc) => ({
+                ...doc,
+                metadata: {
+                    ...doc.metadata,
+                    source_url: url,
+                    source_type: "web",
+                },
+            }));
+            const vectorStore = await QdrantVectorStore.fromDocuments(
+                enrichedDocs,
+                emmbeddings,
+                {
+                    client: qclient,
+                    collectionName: collecttion,
+                }
+            );
+            name = enrichedDocs[0].metadata?.title;
+            const res = createModelsInPrisma(collecttion, type, mode, name, userId);
+            return JSON.parse(JSON.stringify(res));
 
-        const vectorStore = await QdrantVectorStore.fromDocuments(
-            enrichedDocs,
-            emmbeddings,
-            {
-                client: qclient,
-                collectionName: session?.user.name + "_web_collection" + Date.now(),
-            }
-        );
+        } catch (error) {
+            console.log(error)
+        }
 
-        // console.log(vectorStore, "sucee")
 
     }
     if (type === 'text') {
-        const splitter = new RecursiveCharacterTextSplitter({
-            chunkSize: 1000,
-            chunkOverlap: 200,
-        });
-        const rawDoc = new Document({
-            pageContent: url,
-            metadata: {
-                source_type: "text",
-            },
-        });
 
-        const splitDocs = await splitter.splitDocuments([rawDoc]);
+        try {
+            const splitter = new RecursiveCharacterTextSplitter({
+                chunkSize: 1000,
+                chunkOverlap: 200,
+            });
+            const rawDoc = new Document({
+                pageContent: url,
+                metadata: {
+                    source_type: "text",
+                },
+            });
 
-        const vectorStore = await QdrantVectorStore.fromDocuments(
-            splitDocs,
-            emmbeddings,
-            {
-                client: qclient,
-                collectionName: session?.user.name + "_text_collection" + Date.now(),
-            }
-        );
+            const splitDocs = await splitter.splitDocuments([rawDoc]);
+
+            const vectorStore = await QdrantVectorStore.fromDocuments(
+                splitDocs,
+                emmbeddings,
+                {
+                    client: qclient,
+                    collectionName: collecttion,
+                }
+            );
+
+            const res = createModelsInPrisma(collecttion, type, mode, name, userId);
+            return JSON.parse(JSON.stringify(res));
+
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
+    // console.log("Name is ====???", name)
+    // const res = await prisma.models.create({
+    //     data: {
+    //         collection_name: collecttion,
+    //         source: type,
+    //         userId: session?.user.id!,
+    //         type: mode,
+    //         name: name
+    //     }
+    // })
+
+}
+
+export const LoadPdfEmbedings = async (url: string, mode: 'bot' | 'notebook') => {
+    const session = await getServerSession(authOptions);
+    const response = await fetch(url);
+    if (!response.ok) {
+        return (`Failed to fetch PDF: ${response.statusText}`);
+    }
+    const pdfBlob = await response.blob();
+    const loader = new WebPDFLoader(pdfBlob);
+    const docs = await loader.load();
+
+    const collectionName = session?.user.name + "_pdf_collection" + Date.now();
+
+    const vectorStore = await QdrantVectorStore.fromDocuments(docs, emmbeddings, {
+        client: qclient,
+        collectionName: collectionName,
+    })
 
     const res = await prisma.models.create({
         data: {
-            collection_name: collecttion,
-            source: type,
+            collection_name: collectionName,
+            source: 'pdf',
             userId: session?.user.id!,
+            type: mode,
+            name: "Untitled Pdf"
         }
     })
 
     return JSON.parse(JSON.stringify(res));
 }
 
-export const LoadPdfEmbedings = async (url: string) => {
-    const session = await getServerSession(authOptions);
+const createModelsInPrisma = async (collection_name: string, source: string, type: 'bot' | 'notebook', name: string, userId: string) => {
+    try {
+        const res = await prisma.models.create({
+            data: {
+                collection_name,
+                source,
+                userId,
+                type,
+                name: name ? name : "Untitled"
+            }
+        })
+        return res;
+    } catch (error) {
 
-    const response = await fetch(url);
-    if (!response.ok) {
-        return (`Failed to fetch PDF: ${response.statusText}`);
     }
-    const pdfBlob = await response.blob();
-
-    const loader = new WebPDFLoader(pdfBlob);
-    const docs = await loader.load();
-
-
-    const vectorStore = await QdrantVectorStore.fromDocuments(docs, emmbeddings, {
-        client: qclient,
-        collectionName: session?.user.name + "_pdf_collection" + Date.now(),
-    })
-
-    const res = await prisma.models.create({
-        data: {
-            collection_name: session?.user.name + "_pdf_collection" + Date.now(),
-            source: 'pdf',
-            userId: session?.user.id!,
-        }
-    })
-
-    // console.log(docs);
-    return JSON.parse(JSON.stringify(res));
 }

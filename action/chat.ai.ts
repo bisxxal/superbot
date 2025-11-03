@@ -34,27 +34,30 @@ export const chatAIAction = async (userQuary: string, collection: string, id:str
         k: 3,
     })
     const releventChunk = await vectorSearcher.invoke(userQuary);
+    const SYSTEM_PROMPT = `
+            You are an intelligent and helpful AI assistant designed to answer user queries using the context provided.
 
-    const SYSTEM_POMPT = `You are a helpful AI assistant. who helps resoving user quary based on the context available to you . also provide some useful link if needed.
-    
-    only answer based in the avaliable context .
-    
-    Contex:
-    ${JSON.stringify(releventChunk)}
-    `;
+            Instructions:
+            - Use only the information available in the given context to answer.
+            - If the context does not fully answer the question, clearly state that and suggest what additional information might help.
+            - Provide helpful, concise, and accurate answers.
+            - When appropriate, include relevant external resources or links that may help the user.
+
+            Context:
+            ${JSON.stringify(releventChunk, null, 2)}
+            `;
+
 
     const response = await client.chat.completions.create({
         model: "gemini-2.5-flash",
         messages: [
-            { role: "system", content: SYSTEM_POMPT },
+            { role: "system", content: SYSTEM_PROMPT },
             {
                 role: "user",
                 content: userQuary
             },
         ]
     });
-
-    // console.log("🤖 => ", response.choices[0].message.content);
 
   if(id){
       await prisma.models.update({

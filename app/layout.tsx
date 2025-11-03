@@ -26,9 +26,9 @@ export default function RootLayout({
             {children}
           </div>
           <BotennicaChatbot />
-        </QuaryClient>        
+        </QuaryClient>
 
-         {/* <script
+        {/* <script
           id="superbot-widget"
           src="http://localhost:3000/widget.js"
           data-site-id="Vishal B_pdf_collection1761938775522"

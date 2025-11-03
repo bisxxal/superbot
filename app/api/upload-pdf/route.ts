@@ -8,6 +8,7 @@ const imagekit = new ImageKit({
 });
 
 export async function POST(req: NextRequest) {
+ 
     try {
     const formData = await req.formData();
     const file = formData.get('pdfFile') as File;
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, url: uploadResponse.url });
     } catch (error) {
+        console.log(error)
     return NextResponse.json({ error: 'Failed to upload PDF.' }, { status: 500 });
     }
 }

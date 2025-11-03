@@ -24,7 +24,7 @@ body {
 
 .buttonbg{
    /* box-shadow: inset -12px -7px 17px 11px #00000017, 0 8px 10px -6px #0000001a ; */
-  @apply text-white px-4 py-2 transition-all  duration-500 rounded-2xl bg-gradient-to-br  from-amber-200 to-amber-600 ;
+  @apply text-white px-4  transition-all  duration-500 rounded-full bg-gradient-to-br  from-amber-200 to-amber-600 ;
 }
 .textbg{
  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-red-500;

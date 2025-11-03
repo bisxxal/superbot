@@ -6,14 +6,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { LoaderCircle } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 
 function DashBoardPage() {
   const { data } = useSession();
   const router = useRouter();
   const client = useQueryClient();
 
-  const [isLoading, setIsLoading] = useState<string | null>(null)
   const sumbitForm = async (formData: FormData) => {
     const youtube = formData.get("youtube") as string
     const website = formData.get("website") as string
@@ -21,34 +19,24 @@ function DashBoardPage() {
 
     try {
       if (youtube) {
-        const collectionName = data?.user.name + "_youtube_collection"
-        setIsLoading("Generating Youtube Embeddings...")
+        const collectionName = data?.user.name + "_youtube_collection" + Date.now(); 
         createCollections.mutate({ textData: youtube, type: 'yt', collectionName })
-        // console.log("Youtube Embeddings:", res)
       }
       if (website) {
-        setIsLoading("Generating Web Embeddings...")
-        const collectionName = data?.user.name + "_web_collection"
+        const collectionName = data?.user.name + "_web_collection" + Date.now();
         createCollections.mutate({ textData: website, type: 'web', collectionName })
-        // console.log("Website Embeddings:", res)
       }
       if (textData) {
-        setIsLoading("Generating text Embeddings...")
-        const collectionName = data?.user.name + "_text_collection"
+        const collectionName = data?.user.name + "_text_collection" + Date.now();
         createCollections.mutate({ textData, type: 'text', collectionName })
-        // console.log("Text Embeddings:", res)
       }
     } catch (error) {
-
-    }
-    finally {
-      setIsLoading(null)
     }
   }
 
   const createCollections = useMutation({
     mutationFn: async ({ textData, type, collectionName }: { textData: string, type: 'web'|'text'|'yt'; collectionName: string }) => {
-      return await generateEmbeddings(textData, type , collectionName);
+      return await generateEmbeddings(textData, type , collectionName, 'bot');
     },
     onSuccess: (data) => {
       if (data ) {
@@ -62,7 +50,7 @@ function DashBoardPage() {
 
   return (
     <div className=" w-full px-10">
-      <h1 className=" text-center font-bold text-4xl my-5">Dashboard</h1>
+      <h1 className=" text-center text-gray-600 font-bold text-4xl my-5">Dashboard</h1>
       <h2 className=" text-xl font-semibold">Upload Context</h2>
       <p className=" text-gray-500 text-sm my-3">Upload documents or add text to train your AI chatbot. The more context you provide, the better your chatbot will perform.</p>
 
@@ -72,17 +60,7 @@ function DashBoardPage() {
           <p className=" text-lg font-medium">Creating collection...</p>
         </div>
       }
-
-      {
-        isLoading !== null && (
-          <div className=" w-full card h-[70px] flex items-center justify-center mb-4">
-            <LoaderCircle className=" animate-spin mr-2" />
-            <p className=" text-lg font-medium">{isLoading}</p>
-          </div>
-        )
-      }
-
-      <PdfUploader />
+      <PdfUploader mode="bot"/>
       <form action={sumbitForm}>
         <div className="card  mb-6 p-4  py-5 rounded-3xl flex flex-col placeholder:text-gray-50">
           <h2 className="text-2xl text-gray-700 font-bold mb-4">Add YouTube Content</h2>
