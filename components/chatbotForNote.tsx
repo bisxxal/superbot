@@ -35,8 +35,6 @@ export default function NotebookChatbot({ collections, id }: { collections: stri
       setIsLoading(false)
     }
   }
-
-  console.log(messages)
   return (
     <div className="flex flex-col h-[95%] text-white rounded-lg shadow-lg p-4">
       {/* Chat messages */}

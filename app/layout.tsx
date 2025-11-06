@@ -27,6 +27,15 @@ export default function RootLayout({
           </div>
           <BotennicaChatbot />
         </QuaryClient>
+
+        <script
+          id="superbot-widget"
+          src="https://localhost:3000/widget.js"
+          data-site-id="Vishal B_web_collection1762177514021"
+          data-unique-id="cmhj6zy0j0001t0jaou1tgoz5"
+          data-welcome-message="Hello! How can I assist you today?"
+        ></script>
+
       </body>
     </html>
   );

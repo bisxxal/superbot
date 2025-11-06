@@ -16,15 +16,11 @@ const ScriptsPage = () => {
       return JSON.parse(val);
     }
     return null;
-  })
-
-
-
+  }) 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = chatbots?.res.find(c => c.collection_name === e.target.value);
     setSelectedChatbot(selected || null);
   };
-
 
   const handleGenerate = () => {
     if (!selectedChatbot) return;
@@ -60,7 +56,7 @@ const ScriptsPage = () => {
             <h2 className=' text-medium text-xl'>Chatbot Selection</h2>
             <select
               onChange={handleSelectChange}
-              className="mt-5 border-2 border-amber-500/60 outline-none px-5 py-2 rounded-3xl"
+              className="mt-5 border-2 bordercolor outline-none px-5 py-2 rounded-3xl"
             >
               <option value="">Select Chatbot</option>
               {chatbots?.res?.map((chatbot, index) => (
@@ -69,20 +65,7 @@ const ScriptsPage = () => {
                 </option>
               ))}
             </select>
-
-            {/* <div className='mt-5 mb-1'>
-              <p>Welcome message</p>
-              <input
-                type="text"
-                name="youtube"
-                placeholder="How can i assist you"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setSelectedChatbot(prev => prev ? { ...prev, welcome_message: e.currentTarget.value } : prev)
-                }
-                className="w-full p-2 mb-4 border-2 border-amber-500/50 outline-none placeholder:text-amber-900/30 rounded-xl"
-              />
-            </div> */}
-
+ 
           </div>
           <button onClick={handleGenerate} className="mt-5 buttonbg px-4 py-2">
             Generate Script
@@ -101,8 +84,8 @@ const ScriptsPage = () => {
           {generatedScript && (
             <div className="bg-[#111827] text-[#43C374] p-3 rounded-md  overflow-x-auto">
               {generatedScript}
-              <p className='text-[#ffffffb5] text-sm'>
-              // Add the script tag to your website's HTML where you want the chatbot to appear.
+              <p className='text-[#ffffffb5] text-sm mt-5'>
+              // Add the script tag in your code base.
               </p>
             </div>)}
 

@@ -32,8 +32,6 @@ const result = {
   totalSources: s?.uniqueSources.size,
 };
 
-console.log(result);
-
     setTotalConversations(result || {});
   }, [data])
   return (
@@ -47,7 +45,7 @@ console.log(result);
       <div className=' flex items-center justify-evenly mb-10'>
         <div className=' w-[30%] shadow-xl h-[100px] bordercolor border center rounded-3xl flex-col'>
           <p className='textbg'>Total chatbots</p>
-          <p className=' text-3xl text-green-500 font-bold'>{data?.res.length}</p>
+          <p className=' text-3xl text-green-500 font-bold'>{data?.res?.length}</p>
         </div>
         <div className=' w-[30%] shadow-xl h-[100px] bordercolor border center rounded-3xl flex-col'>
           <p className='textbg'>Total Conversations</p>

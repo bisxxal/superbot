@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postinstall": "prisma generate",
+
     "prisma:migrate": "prisma migrate deploy",
     "studio": "prisma studio",
     "prisma:docker": "npm run prisma:migrate && npm run studio",

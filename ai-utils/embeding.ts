@@ -22,8 +22,6 @@ const qclient = new QdrantClient({
 
 
 export const generateEmbeddings = async (url: string, type: 'yt' | 'text' | 'web', collecttion: string, mode: 'bot' | 'notebook') => {
-    // LoadPdfEmbedings('https://ik.imagekit.io/cqy7eyhof/pdfs/attentionisallyouneed_zV4DPNxQn.pdf?updatedAt=1761894007781','pdf')
-
     const session = await getServerSession(authOptions);
     const userId = session?.user.id!;
     let docs;
@@ -101,7 +99,7 @@ export const generateEmbeddings = async (url: string, type: 'yt' | 'text' | 'web
             return JSON.parse(JSON.stringify(res));
 
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
 
 
@@ -135,22 +133,10 @@ export const generateEmbeddings = async (url: string, type: 'yt' | 'text' | 'web
             return JSON.parse(JSON.stringify(res));
 
         } catch (error) {
-            console.log(error)
         }
 
     }
-
-    // console.log("Name is ====???", name)
-    // const res = await prisma.models.create({
-    //     data: {
-    //         collection_name: collecttion,
-    //         source: type,
-    //         userId: session?.user.id!,
-    //         type: mode,
-    //         name: name
-    //     }
-    // })
-
+    
 }
 
 export const LoadPdfEmbedings = async (url: string, mode: 'bot' | 'notebook') => {
